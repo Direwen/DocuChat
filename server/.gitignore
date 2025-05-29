@@ -77,3 +77,9 @@ static/styles/output.css
 
 #uv-specific
 .uv/
+
+#Dummy test folder
+test/
+
+#Chroma DB
+chroma_db/

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Document
+from .models import Document, DocumentChunk
 
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,3 +15,9 @@ class DocumentSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("File type not supported. Only pdf, docx, txt files are allowed.")
         
         return value
+    
+class DocumentChunkSerializer(serializers.Serializer):
+    class Meta:
+        model=DocumentChunk
+        fields = ['id', 'document', 'content', 'chunk_index', 'embedding_dim', 'embedding_id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
