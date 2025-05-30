@@ -16,8 +16,8 @@ class DocumentSerializer(serializers.ModelSerializer):
         
         return value
     
-class DocumentChunkSerializer(serializers.Serializer):
+class DocumentUpdateSerializer(serializers.ModelSerializer):
     class Meta:
-        model=DocumentChunk
-        fields = ['id', 'document', 'content', 'chunk_index', 'embedding_dim', 'embedding_id', 'created_at', 'updated_at']
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        model=Document
+        fields = ['name']
+        read_only_fields = ['id', 'uploaded_at']

@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from .models import Document, DocumentChunk
-from .serializers import DocumentSerializer, DocumentChunkSerializer
+from .serializers import DocumentSerializer, DocumentUpdateSerializer
 from .utils.text_extractor import TextExtractor
 from .utils.text_splitter import get_text_splitter
 from .utils.vector_operations import add_documents, remove_documents, get_similar_docs, delete_collection
@@ -21,11 +21,16 @@ class DocumentViewSet(ModelViewSet):
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
     
+    def get_serializer_class(self):
+        if self.action == 'update':
+            return DocumentUpdateSerializer
+        return super().get_serializer_class()
+    
     def perform_create(self, serializer):
         try:
-            serializer.is_valid(raise_exception=True)
-            uploaded_file = self.request.FILES.get('file')
             with transaction.atomic():
+                serializer.is_valid(raise_exception=True)
+                uploaded_file = self.request.FILES.get('file')
                 document = serializer.save(user=self.request.user)
                 #Create vector collection name based on document ID
                 collection_name = str(document.id) 
@@ -67,3 +72,18 @@ class DocumentViewSet(ModelViewSet):
                 "details": str(e),
                 "trace": traceback.format_exc()
             })
+            
+    def perform_destroy(self, instance):
+        collection_name = str(instance.id)
+        with transaction.atomic():
+            try:
+                delete_collection(collection_name)
+                #Delete Document along with its Chunks
+                instance.delete()
+            except Exception as e:
+                raise ValidationError({
+                    "error": "An error occurred while deleting your document.",
+                    "details": str(e),
+                    "trace": traceback.format_exc()
+                })
+            

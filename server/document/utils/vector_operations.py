@@ -21,6 +21,13 @@ def get_similar_docs(collection_name: str, query: str, k: int, filter: dict={}):
     return results
 
 def delete_collection(collection_name: str):
-    vector_store = get_vector_store(collection_name)
-    client: Client = vector_store._client
-    client.delete_collection(name=collection_name)
+    try:
+        vector_store = get_vector_store(collection_name)
+        client: Client = vector_store._client #Get chroma client from LANGCHAIN Chroma Wrapper
+        collection = client.get_collection(name=collection_name) #Get collection from the actual chroma client
+        result = collection.get()
+        doc_ids = result.get('ids', [])
+        collection.delete(ids=doc_ids) #Delete all documents in collection
+        client.delete_collection(name=collection_name) #Delete the collection
+    except Exception as e:
+        raise Exception(e)
