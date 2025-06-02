@@ -8,7 +8,7 @@ def classification_node(state: ChatRAGState):
     
     #Determine the requirement of clarification from user
     response = model.invoke(prompt_template.format(
-        
+        user_message="What is the capital of France?"
     ))
     #If required, redirect to the request user node
     

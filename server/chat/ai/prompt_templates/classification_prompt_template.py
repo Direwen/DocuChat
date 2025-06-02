@@ -22,11 +22,14 @@ Respond ONLY with "True" (needs clarification) or "False" (clear enough).
 Examples:
 '''
 
+# Suffix
+suffix = "User Query: {user_message}\nClassification:"
+
 # Create FewShotPromptTemplate
 prompt_template = FewShotPromptTemplate(
     examples=examples,
     example_prompt=example_prompt,
     prefix=system_prompt,
-    suffix="User Query: {user_message}\nClassification:",
+    suffix=suffix,
     input_variables=["user_message"]
 )
