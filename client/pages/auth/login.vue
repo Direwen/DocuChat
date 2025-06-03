@@ -1,34 +1,43 @@
 <template>
-    <div class="min-h-screen flex items-center justify-center bg-gray-50">
-      <div class="max-w-md w-full p-6 bg-white rounded shadow">
-        <h2 class="text-2xl font-bold mb-4">Login</h2>
-        <form @submit.prevent="login">
-          <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" v-model="email" class="w-full px-3 py-2 border rounded" required />
-          </div>
-          <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700">Password</label>
-            <input type="password" v-model="password" class="w-full px-3 py-2 border rounded" required />
-          </div>
-          <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-            Sign In
-          </button>
-        </form>
-        <p class="mt-4 text-center">
-          Don't have an account?
-          <NuxtLink to="/auth/register" class="text-blue-600 underline">Register</NuxtLink>
-        </p>
-      </div>
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full p-6 rounded shadow">
+      <h2 class="text-2xl font-bold mb-4">Login</h2>
+      <form @submit.prevent="login">
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1">Username</label>
+          <InputsText v-model="username" placeholder="E.g. Alex" />
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1">Password</label>
+          <InputsPassword v-model="password" />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-block btn-primary"
+        >
+          Sign In
+        </button>
+      </form>
+      <p class="mt-4 text-center text-accent flex justify-between items-center">
+        <span>Don't have an account?</span>
+        <NuxtLink to="/auth/register" class="underline underline-offset-3">Register</NuxtLink>
+      </p>
     </div>
-  </template>
-  
-  <script setup>
-  const email = ref('')
-  const password = ref('')
-  
-  function login() {
-    // Mock login logic
-    alert('Logged in as ' + email.value)
-  }
-  </script>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+
+const username = ref('');
+const password = ref('');
+
+function login() {
+  // Mock login logic
+  alert('Logged in as ' + username.value + 'with password: ' + password.value);
+}
+
+definePageMeta({
+  layout: 'guest'
+})
+</script>

@@ -3,13 +3,12 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
+  css: ["~/assets/css/main.css"],
 
   vite: {
     plugins: [
       tailwindcss(),
     ],
   },
-
-  modules: ['@element-plus/nuxt', '@pinia/nuxt'],
+  modules: ['@pinia/nuxt'],
 })
