@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center">
+  <div class="h-full flex items-center justify-center">
     <div class="max-w-md w-full p-6 rounded shadow">
       <h2 class="text-2xl font-bold mb-4">Register</h2>
       <form @submit.prevent="register">
@@ -43,6 +43,6 @@ function register() {
 }
 
 definePageMeta({
-  layout: 'guest'
+  layout: 'guest',
 });
 </script>

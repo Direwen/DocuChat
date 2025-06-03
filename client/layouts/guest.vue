@@ -26,7 +26,9 @@
                 </div>
             </div>
             <!-- Page content here -->
-            <slot></slot>
+            <div class="min-h-screen">
+                <slot></slot>
+            </div>
 
             <Footer></Footer>
 
