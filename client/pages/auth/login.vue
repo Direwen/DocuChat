@@ -31,10 +31,13 @@ import { ref } from 'vue';
 
 const username = ref('');
 const password = ref('');
+const authStore = useAuthStore();
 
 function login() {
   // Mock login logic
-  alert('Logged in as ' + username.value + 'with password: ' + password.value);
+  // alert('Logged in as ' + username.value + 'with password: ' + password.value);
+  authStore.login({username: username.value, password: password.value});
+
 }
 
 definePageMeta({
