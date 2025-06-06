@@ -1,5 +1,5 @@
 <template>
-  
+
   <p>
     {{ authStore.user }}
   </p>

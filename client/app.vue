@@ -14,7 +14,7 @@ const authStore = useAuthStore();
 
 if (import.meta.client) {
   const token = localStorage.getItem('token');
-  if (token) {
+  if (token && !authStore.isAuthenticated) {
     authStore.getUser();
   }
 }
